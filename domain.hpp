@@ -21,7 +21,7 @@ public:
 
 	//Experiment Model
 	AnalysisDomain *Test2D_Exp1(){
-		std::cout << "**Loading Phantom Experiment Model(20150326)" << std::endl;
+		//std::cout << "**Loading Phantom Experiment Model(20150326)" << std::endl;
 		this->NumOfDim = 2;
 		this->NumOfEleX = 10;
 		this->NumOfEleY = 10;
@@ -89,7 +89,7 @@ public:
 	int ConvertPoint(int x,int y,int z){
 		int res = ( z * ((this->NumOfEleX+1)*(this->NumOfEleY+1)) + y *(this->NumOfEleX+1) + x );
 		if( x > this->NumOfEleX || y > this->NumOfEleY || z > this->NumOfEleZ ){
-			std::cout << "(ConvertPoint) Err" << std::endl;
+			//std::cout << "(ConvertPoint) Err" << std::endl;
 			res = -1;
 		}
 		return res;
@@ -97,7 +97,7 @@ public:
     int ConvertElement(int x,int y,int z){
 		int res = ( z * (this->NumOfEleX*this->NumOfEleY) + y * this->NumOfEleX + x );
 		if( x >= this->NumOfEleX || y >= this->NumOfEleY || z >= this->NumOfEleZ ){
-			std::cout << "(ConvertElement) Err" << std::endl;
+			//std::cout << "(ConvertElement) Err" << std::endl;
 			res = -1;
 		}
 		return res;
@@ -105,7 +105,7 @@ public:
     int ConvertPoint(int x,int y){
 		int res = ( y * (this->NumOfEleX+1) + x );
 		if( x > this->NumOfEleX || y > this->NumOfEleY ){
-			std::cout << "(ConvertPoint) Err" << std::endl;
+			//std::cout << "(ConvertPoint) Err" << std::endl;
 			res = -1;
 		}
 		return res;
@@ -113,7 +113,7 @@ public:
     int ConvertElement(int x,int y){
 		int res = ( y *NumOfEleX + x );
 		if( x >= this->NumOfEleX || y >= this->NumOfEleY ){
-			std::cout << "(ConvertElement) Err" << std::endl;
+			//std::cout << "(ConvertElement) Err" << std::endl;
 			res = -1;
 		}
 		return res;

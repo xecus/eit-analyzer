@@ -46,7 +46,7 @@ void wclrscr(WINDOW * pwin){
 }
 
 
-int main(int argc,char *argv[]){
+int main1(int argc,char *argv[]){
 
 	//Welcome Message
 	std::cout << "[EIT Reconstruction Program]" << std::endl;
@@ -226,7 +226,7 @@ int main2(int argc,char *argv[]){
 
 }
 
-int main1(int argc,char *argv[]){
+int main(int argc,char *argv[]){
 
 	InverseProblem *p = new InverseProblem(new Fem(new ESet(
 		//(new AnalysisDomain())->Set(2,(int[]){8,8,0},(double[]){0.15,0.15,0.08},(int[]){0,0,1})

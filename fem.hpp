@@ -276,7 +276,7 @@ public:
 	}
 
 	Eigen::VectorXd CalcZ(){	// For Translate-Filter
-		std::cout << "**Making Kanzan Filter" << std::endl;
+		//std::cout << "**Making Kanzan Filter" << std::endl;
 		Eigen::VectorXd SigmaMap = Eigen::VectorXd::Zero( SumOfElement );
 		for(int i=0;i<SumOfElement;i++) SigmaMap(i) = 1.0;
 		return CalcZ( SigmaMap );
@@ -286,10 +286,10 @@ public:
 		Eigen::VectorXd res(esp->NumOfES);
 		Eigen::SparseMatrix<double> FEM_lhs;
 		Eigen::SparseMatrix<double> FEM_rhs;
-		std::cout << "**Ready Assumed Sigma" << std::endl;
+		//std::cout << "**Ready Assumed Sigma" << std::endl;
 		if( this->esp->adp->NumOfDim == 2 ) SetSigma2D(SigmaMap);
 		if( this->esp->adp->NumOfDim == 3 ) SetSigma3D(SigmaMap);
-		std::cout << "**Calc" << std::endl;
+		//std::cout << "**Calc" << std::endl;
 		for(int i=0;i<(esp->NumOfES);i++){
 			if( this->esp->adp->NumOfDim == 2 ) SetBC2D(i,false,FEM_lhs,FEM_rhs);
 			if( this->esp->adp->NumOfDim == 3 ) SetBC3D(i,false,FEM_lhs,FEM_rhs);
@@ -304,10 +304,10 @@ public:
 		Eigen::SparseMatrix<double> FEM_rhs;
 		Eigen::VectorXd PotenA;
 		Eigen::VectorXd PotenB;
-		std::cout << "**Ready Assumed Sigma" << std::endl;
+		//std::cout << "**Ready Assumed Sigma" << std::endl;
 		if( this->esp->adp->NumOfDim == 2 ) SetSigma2D(SigmaMap);
 		if( this->esp->adp->NumOfDim == 3 ) SetSigma3D(SigmaMap);
-		std::cout << "**Calc" << std::endl;
+		//std::cout << "**Calc" << std::endl;
 		for(int i=0;i<(esp->NumOfES);i++){
 			if( this->esp->adp->NumOfDim == 2 ) SetBC2D(i,false,FEM_lhs,FEM_rhs);	//fai
 			if( this->esp->adp->NumOfDim == 3 ) SetBC3D(i,false,FEM_lhs,FEM_rhs);	//fai

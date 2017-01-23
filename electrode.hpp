@@ -18,17 +18,17 @@ public:
 
 	//Print Detail
 	void Print(){
-		std::cout << "[Eset Print]" << std::endl;
-		std::cout << "NumOfE_Layer=" << NumOfE_Layer << std::endl;
-		std::cout << "NumOfE_Sum=" << NumOfE_Sum << std::endl;
-		std::cout << "NumOfES=" << NumOfES << std::endl;
+		//std::cout << "[Eset Print]" << std::endl;
+		//std::cout << "NumOfE_Layer=" << NumOfE_Layer << std::endl;
+		//std::cout << "NumOfE_Sum=" << NumOfE_Sum << std::endl;
+		//std::cout << "NumOfES=" << NumOfES << std::endl;
 		return;
 	}
 
 
 	ESet(AnalysisDomain *_adp){
 		this->adp = _adp;
-		std::cout << "**Calc Electrode Set Index" << std::endl;
+		//std::cout << "**Calc Electrode Set Index" << std::endl;
 		//Electrode Set Type I
 		if(adp->ModeOfES == 0)
 			this->NumOfE_Layer = (adp->NumOfEleX/2 + adp->NumOfEleY/2)*2;
@@ -46,15 +46,15 @@ public:
 		std::cout << "this->NumOfE_Sum=" << this->NumOfE_Sum << std::endl;
 		std::cout << "this->NumOfES=" << this->NumOfES << std::endl;
 		*/
-		std::cout << "**Generating Electrode Set Array" << std::endl;
+		//std::cout << "**Generating Electrode Set Array" << std::endl;
 		Generate();
-		std::cout << "**Saving Electrode Set" << std::endl;
+		//std::cout << "**Saving Electrode Set" << std::endl;
 		SaveES("./out/ES.csv");
 		return;
 	}
 	ESet(AnalysisDomain *_adp,std::string fn,int _numofes){
 		this->adp = _adp;
-		std::cout << "**Calc Electrode Set Index" << std::endl;
+		//std::cout << "**Calc Electrode Set Index" << std::endl;
 		//Electrode Set Type I
 		if(adp->ModeOfES == 0)
 			this->NumOfE_Layer = (adp->NumOfEleX/2 + adp->NumOfEleY/2)*2;
@@ -76,7 +76,7 @@ public:
 		int cnt = 0;
 		int cnt2 = 0;
 		int flag = 0;
-		std::ifstream ifs(fn);
+		std::ifstream ifs(fn.c_str());
 		std::string str;
 		while( getline( ifs, str ) ){
 			std::string token;
@@ -92,7 +92,7 @@ public:
 					ss << token;
 					int tmp;
 					ss >> tmp;
-					std::cout << "[" << cnt2 << "]token=" << tmp << std::endl;
+					//std::cout << "[" << cnt2 << "]token=" << tmp << std::endl;
 					EsArray[cnt2++]=tmp;
 				}
 				cnt++;
@@ -101,18 +101,17 @@ public:
 		}
 
 		for(int i=0;i<_numofes;i++){
-			std::cout << "[" << i << "] ";
-			std::cout << EsArray[4*i+0] << " ";
-			std::cout << EsArray[4*i+1] << " ";
-			std::cout << EsArray[4*i+2] << " ";
-			std::cout << EsArray[4*i+3] << " ";
-			std::cout << std::endl;
-
+			//std::cout << "[" << i << "] ";
+			//std::cout << EsArray[4*i+0] << " ";
+			//std::cout << EsArray[4*i+1] << " ";
+			//std::cout << EsArray[4*i+2] << " ";
+			//std::cout << EsArray[4*i+3] << " ";
+			//std::cout << std::endl;
 		}
 
-		std::cout << "**Generating Electrode Set Array" << std::endl;
+		//std::cout << "**Generating Electrode Set Array" << std::endl;
 		Generate();
-		std::cout << "**Saving Electrode Set" << std::endl;
+		//std::cout << "**Saving Electrode Set" << std::endl;
 		SaveES("./out/ES.csv");
 		return;
 	}
@@ -221,7 +220,7 @@ public:
 
 	int Get(int esNum,int info){
 		if( esNum >= NumOfES ){
-			std::cout << "(Error!)" << std::endl;
+			//std::cout << "(Error!)" << std::endl;
 			return -1;
 		}else{
 			return EsArray[ esNum *4 + info];
