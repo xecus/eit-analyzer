@@ -46,27 +46,30 @@ void wclrscr(WINDOW * pwin){
 }
 
 
-int main1(int argc,char *argv[]){
+int simple_forward_calc(int argc,char *argv[]){
 
 	//Welcome Message
 	std::cout << "[EIT Reconstruction Program]" << std::endl;
 
-	/*
+	int numOfDiv[3] = {20,20,0};
+	double sizeOfDiv[3] = {0.15,0.15,0.08};
+	int prm[3] = {2,0,1};
+
+
 	ESet *eset = new ESet(
-		//(new AnalysisDomain())->Set(2,(int[]){8,8,0},(double[]){0.15,0.15,0.08},(int[]){0,0,1})
-		(new AnalysisDomain())->Test2D_Exp1()
+		//(new AnalysisDomain())->Test2D_Exp1()
+		(new AnalysisDomain())->Set(2, numOfDiv, sizeOfDiv, prm)
 	);
 	eset->Print();
-	*/
+
 
 	InverseProblem *p = new InverseProblem(
 		new Fem(
-			new ESet(
-				(new AnalysisDomain())->Test2D_Exp1(),
-				"uho.csv",594
-			)
+			//new ESet((new AnalysisDomain())->Test2D_Exp1(), "uho.csv",594)
+			eset
 		)
 	);
+
 
 	p->Init();
 
@@ -87,19 +90,21 @@ int main1(int argc,char *argv[]){
 }
 
 
-int main3(int argc,char *argv[]){
+int forward_calc_for_nn(int argc,char *argv[]){
 
 	//Welcome Message
 	std::cout << "[EIT Reconstruction Program]" << std::endl;
 
-	InverseProblem *p = new InverseProblem(new Fem(new ESet(
-		//(new AnalysisDomain())->Set(2,(int[]){8,8,0},(double[]){0.15,0.15,0.08},(int[]){0,0,1})
-		(new AnalysisDomain())->Test2D_Exp1()
-	)));
+	int numOfDiv[3] = {8,8,0};
+	double sizeOfDiv[3] = {0.15,0.15,0.08};
+	int prm[3] = {0,0,1};
 
+	InverseProblem *p = new InverseProblem(new Fem(new ESet(
+		(new AnalysisDomain())->Set(2, numOfDiv, sizeOfDiv, prm)
+		//(new AnalysisDomain())->Test2D_Exp1()
+	)));
 	std::cout << "[Init()]" << std::endl;
 	p->Init();
-
 
 	int SampleNum = 64*2 + 1;
 	int SampleCnt = 0;
@@ -119,60 +124,8 @@ int main3(int argc,char *argv[]){
 	}
 	}
 	
-	/*
-	for(int y=0;y<(p->femp->esp->adp->NumOfEleY);y++){
-	for(int x=0;x<(p->femp->esp->adp->NumOfEleX);x++){
-		std::cout << "B[" << x << "," << y << "]" << std::endl;
-		for(int i=0;i<(p->femp->SumOfElement);i++) SIGMA( SampleCnt , i ) = 1.0;
-		SIGMA( SampleCnt , p->femp->esp->adp->ConvertElement(x,y) ) = 5.0;
-		Eigen::VectorXd tmp = SIGMA.row(SampleCnt);
-		ZZZ.row(SampleCnt) = p->femp->CalcZ( tmp );
-		SampleCnt++;
-	}
-	}
-	*/
-
-	//Flat
-	{
-	for(int i=0;i<(p->femp->SumOfElement);i++) SIGMA( SampleCnt , i ) = 1.0;
-	Eigen::VectorXd tmp = SIGMA.row(SampleCnt);
-	ZZZ.row(SampleCnt) = p->femp->CalcZ( tmp );
-	SampleCnt++;
-	}
-
-	//1
-	{
-	for(int i=0;i<(p->femp->SumOfElement);i++) SIGMA( SampleCnt , i ) = 1.0;
-	SIGMA( SampleCnt , p->femp->esp->adp->ConvertElement(1,1) ) = 2.0;
-	SIGMA( SampleCnt , p->femp->esp->adp->ConvertElement(6,6) ) = 5.0;
-	Eigen::VectorXd tmp = SIGMA.row(SampleCnt);
-	ZZZ.row(SampleCnt) = p->femp->CalcZ( tmp );
-	SampleCnt++;
-	}
-
-	//1
-	{
-	for(int i=0;i<(p->femp->SumOfElement);i++) SIGMA( SampleCnt , i ) = 1.0;
-	SIGMA( SampleCnt , p->femp->esp->adp->ConvertElement(1,1) ) = 2.0;
-	SIGMA( SampleCnt , p->femp->esp->adp->ConvertElement(6,1) ) = 5.0;
-	Eigen::VectorXd tmp = SIGMA.row(SampleCnt);
-	ZZZ.row(SampleCnt) = p->femp->CalcZ( tmp );
-	SampleCnt++;
-	}
-
-	//1
-	{
-	for(int i=0;i<(p->femp->SumOfElement);i++) SIGMA( SampleCnt , i ) = 1.0;
-	SIGMA( SampleCnt , p->femp->esp->adp->ConvertElement(1,6) ) = 2.0;
-	SIGMA( SampleCnt , p->femp->esp->adp->ConvertElement(6,6) ) = 5.0;
-	Eigen::VectorXd tmp = SIGMA.row(SampleCnt);
-	ZZZ.row(SampleCnt) = p->femp->CalcZ( tmp );
-	SampleCnt++;
-	}
-
-
-	std::ofstream ofs1("./tmp/S.csv");
-	std::ofstream ofs2("./tmp/Z.csv");
+	std::ofstream ofs1("./S.csv");
+	std::ofstream ofs2("./Z.csv");
 	for(int i=0;i<SampleCnt;i++){
 		for(int j=0;j<(p->femp->SumOfElement);j++){
 			ofs1 << SIGMA( i , j ) ;
@@ -190,14 +143,18 @@ int main3(int argc,char *argv[]){
 }
 
 
-int main2(int argc,char *argv[]){
+int demo_without_ncurses(int argc,char *argv[]){
 
 	//Welcome Message
 	std::cout << "[EIT Reconstruction Program]" << std::endl;
 
+	int numOfDiv[3] = {8,8,0};
+	double sizeOfDiv[3] = {0.15,0.15,0.08};
+	int prm[3] = {0,0,1};
+
 	InverseProblem *p = new InverseProblem(new Fem(new ESet(
-		//(new AnalysisDomain())->Set(2,(int[]){8,8,0},(double[]){0.15,0.15,0.08},(int[]){0,0,1})
-		(new AnalysisDomain())->Test2D_Exp1()
+		(new AnalysisDomain())->Set(2, numOfDiv, sizeOfDiv, prm)
+		//(new AnalysisDomain())->Test2D_Exp1()
 	)));
 
 	std::cout << "[Init()]" << std::endl;
@@ -226,11 +183,15 @@ int main2(int argc,char *argv[]){
 
 }
 
-int main(int argc,char *argv[]){
+int demo_with_ncurses(int argc,char *argv[]){
+
+	int numOfDiv[3] = {8,8,0};
+	double sizeOfDiv[3] = {0.15,0.15,0.08};
+	int prm[3] = {0,0,1};
 
 	InverseProblem *p = new InverseProblem(new Fem(new ESet(
-		//(new AnalysisDomain())->Set(2,(int[]){8,8,0},(double[]){0.15,0.15,0.08},(int[]){0,0,1})
-		(new AnalysisDomain())->Test2D_Exp1()
+		//(new AnalysisDomain())->Test2D_Exp1()
+		(new AnalysisDomain())->Set(2, numOfDiv, sizeOfDiv, prm)
 	)));
 
 	p->Init();
@@ -291,4 +252,8 @@ int main(int argc,char *argv[]){
 	endwin();
 	
 	return 0;
+}
+
+int main(int argc,char *argv[]){
+	simple_forward_calc(argc, argv);
 }

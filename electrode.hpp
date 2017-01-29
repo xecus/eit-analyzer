@@ -18,10 +18,10 @@ public:
 
 	//Print Detail
 	void Print(){
-		//std::cout << "[Eset Print]" << std::endl;
-		//std::cout << "NumOfE_Layer=" << NumOfE_Layer << std::endl;
-		//std::cout << "NumOfE_Sum=" << NumOfE_Sum << std::endl;
-		//std::cout << "NumOfES=" << NumOfES << std::endl;
+		std::cout << "[Eset Print]" << std::endl;
+		std::cout << "NumOfE_Layer=" << NumOfE_Layer << std::endl;
+		std::cout << "NumOfE_Sum=" << NumOfE_Sum << std::endl;
+		std::cout << "NumOfES=" << NumOfES << std::endl;
 		return;
 	}
 
@@ -49,7 +49,7 @@ public:
 		//std::cout << "**Generating Electrode Set Array" << std::endl;
 		Generate();
 		//std::cout << "**Saving Electrode Set" << std::endl;
-		SaveES("./out/ES.csv");
+		SaveES("./ES.csv");
 		return;
 	}
 	ESet(AnalysisDomain *_adp,std::string fn,int _numofes){
@@ -112,7 +112,7 @@ public:
 		//std::cout << "**Generating Electrode Set Array" << std::endl;
 		Generate();
 		//std::cout << "**Saving Electrode Set" << std::endl;
-		SaveES("./out/ES.csv");
+		SaveES("./ES.csv");
 		return;
 	}
 
