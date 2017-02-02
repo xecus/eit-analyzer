@@ -185,9 +185,9 @@ int demo_without_ncurses(int argc,char *argv[]){
 
 int demo_with_ncurses(int argc,char *argv[]){
 
-	int numOfDiv[3] = {8,8,0};
+	int numOfDiv[3] = {20,20,0};
 	double sizeOfDiv[3] = {0.15,0.15,0.08};
-	int prm[3] = {0,0,1};
+	int prm[3] = {2,0,1};
 
 	InverseProblem *p = new InverseProblem(new Fem(new ESet(
 		//(new AnalysisDomain())->Test2D_Exp1()
@@ -255,5 +255,5 @@ int demo_with_ncurses(int argc,char *argv[]){
 }
 
 int main(int argc,char *argv[]){
-	simple_forward_calc(argc, argv);
+	demo_with_ncurses(argc, argv);
 }
